@@ -1,0 +1,67 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: adamhoover-adamhoover-poi-backend-app-dev
+  annotations:
+    argocd/app-name: adamhoover-adamhoover-poi-backend-app-dev
+    backstage.io/kubernetes-id: adamhoover-adamhoover-poi-backend-app-dev
+    backstage.io/kubernetes-namespace: adamhoover
+    backstage.io/kubernetes-label-selector: 'app.kubernetes.io/instance=adamhoover-adamhoover-poi-backend-app-dev'
+    backstage.io/techdocs-ref: dir:.
+    github.com/project-slug: Summit23Janus2/adamhoover-backend
+    janus-idp.io/tekton-enabled: 'true'
+  tags:
+    - java
+    - quarkus
+    - maven
+    - workshop
+  links:
+    - url: https://console-openshift-console.apps.summit23blues.6mbu.p1.openshiftapps.com/dev-pipelines/ns/adamhoover/
+      title: Pipelines
+      icon: web
+    - url: https://console-openshift-console.apps.summit23blues.6mbu.p1.openshiftapps.com/k8s/ns/adamhoover/deployments/adamhoover-poi-backend-app
+      title: Deployment
+      icon: web
+    - url: https://devspaces.apps.summit23blues.6mbu.p1.openshiftapps.com/#https://github.com/Summit23Janus2/adamhoover-backend?che-editor=che-incubator/che-code/latest&devfilePath=.devfile-vscode.yaml
+      title: OpenShift Dev Spaces (VS Code)
+      icon: web
+spec:
+  type: service
+  lifecycle: production
+  owner: "adamhoover"
+  system: workshop-system-adamhoover
+  providesApis:
+    - backend-api-adamhoover
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: workshop-system-adamhoover
+  tags:
+    - backstage
+    - janus-idp
+    - openshift
+    - workshop
+    - rh-summit
+spec:
+  owner: "adamhoover"
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: backend-api-adamhoover
+  description: API surface used by workshop attendees to initialize and load parks data
+  links:
+    - url: http://adamhoover-poi-backend-app-adamhoover.apps.summit23blues.6mbu.p1.openshiftapps.com/q/swagger-ui
+      title: Swagger UI
+      icon: web
+    - url: https://github.com/Summit23Janus2/adamhoover-backend/tree/main/src/main/resources/META-INF/openapi.yaml
+      title: API Spec
+      icon: code
+spec:
+  type: openapi
+  lifecycle: production
+  owner: "adamhoover"
+  system: workshop-system-adamhoover
+  definition:
+    $text: https://github.com/Summit23Janus2/adamhoover-backend/tree/main/src/main/resources/META-INF/openapi.yaml
